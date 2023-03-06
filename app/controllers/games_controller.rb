@@ -13,15 +13,40 @@ class GamesController < ApplicationController
 
   def score
     @word = params[:answer].upcase
-    @array = params[:array]
-    # @message = gen_message(@attempt, @letters)
+    @letters = params[:array].split(", ")
+    @message = gen_message(@word, @letters)
 
   end
 
-  # def english?(word)
-  #   url = "https://wagon-dictionary.herokuapp.com/#{attempt}"
-  #   serialized_file = URI.open(url).read
-  #   word = JSON.parse(serialized_file)
-  #   return word["found"]
-  # end
+  def english?(attempt)
+    url = "https://wagon-dictionary.herokuapp.com/#{attempt}"
+    serialized_file = URI.open(url).read
+    word = JSON.parse(serialized_file)
+    return word["found"]
+  end
+
+  def within_grid(attempt, grid)
+    new_array = []
+    attempt_array = attempt.upcase.chars
+    if attempt_array.all? { |letter| grid.include?(letter) }
+      grid.each do |e|
+        new_array << e if attempt_array.include?(e)
+      end
+      return attempt_array.size <= new_array.size
+    else
+      return false
+    end
+  end
+
+  def gen_message(attempt, letters)
+    if english?(attempt) == true
+      if within_grid(attempt, letters) == true
+        return 'well done'
+      else
+        return 'not in the grid'
+      end
+    else
+      return 'not an english word'
+    end
+  end
 end
