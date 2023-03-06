@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'json'
+
 class GamesController < ApplicationController
   def new
     @letters = []
@@ -10,5 +13,15 @@ class GamesController < ApplicationController
 
   def score
     @word = params[:answer].upcase
+    @array = params[:array]
+    # @message = gen_message(@attempt, @letters)
+
   end
+
+  # def english?(word)
+  #   url = "https://wagon-dictionary.herokuapp.com/#{attempt}"
+  #   serialized_file = URI.open(url).read
+  #   word = JSON.parse(serialized_file)
+  #   return word["found"]
+  # end
 end

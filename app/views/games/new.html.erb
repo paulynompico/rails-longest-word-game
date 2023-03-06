@@ -8,4 +8,6 @@
   <input type="text" id="answer" name="answer" class="form-control">
   <input type="submit" value="Play" class="btn btn-primary">
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <% array = @letters.join(", ") %>
+  <input id="array" name="array" type="hidden" value="<%= array %>">
 </form>
