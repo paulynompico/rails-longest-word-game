@@ -41,12 +41,12 @@ class GamesController < ApplicationController
   def gen_message(attempt, letters)
     if english?(attempt) == true
       if within_grid(attempt, letters) == true
-        return 'well done'
+        return 'Well done!'
       else
-        return 'not in the grid'
+        return "Sorry, but #{@word} can't be built out of #{params[:array]}."
       end
     else
-      return 'not an english word'
+      return "Sorry, but #{@word} is not an English word."
     end
   end
 end
